@@ -1,0 +1,23 @@
+{
+  "name": "avl-tree",
+  "version": "0.0.1",
+  "description": "Self-balancing binary search tree.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "avl",
+    "sort",
+    "tree"
+  ],
+  "author": "Cezary Wolszczak, wolszczc",
+  "license": "ISC",
+  "dependencies": {
+    "path": "^0.12.7",
+    "webpack": "^4.4.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^2.0.13"
+  }
+}
