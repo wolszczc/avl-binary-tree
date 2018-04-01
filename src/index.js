@@ -1,13 +1,14 @@
 import AVLTree from './AVLTree'
 
 const tree = new AVLTree()
-let root = null
 
-root = tree.insert(root, 1) 
-root = tree.insert(root, 2) 
-root = tree.insert(root, 3) 
-root = tree.insert(root, 4)  
-root = tree.insert(root, 2.5)
-root = tree.insert(root, 5) 
+tree.insert(1) 
+tree.insert(2) 
+tree.insert(3) 
+tree.insert(4)  
+tree.insert(2.5)
+tree.insert(5) 
+tree.insert(5) 
+tree.insert(5) 
 
-console.log(root)
+console.log(tree.root)

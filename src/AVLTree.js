@@ -1,14 +1,32 @@
 import TreeNode from './TreeNode'
 
 export default class AVLTree {
-  insert (root, key) {
+  constructor () {
+    this.root = null
+  }
+
+  /**
+   * Add new value to tree
+   * @param {value} key 
+   */
+  insert (key) {
+    this.root = this.insertToNode(this.root, key) 
+  }
+
+  /**
+   * Insert new value to node.
+   * @param {AVLTree} root 
+   * @param {value} key 
+   * @returns AVLTree with new value
+   */
+  insertToNode (root, key) {
     // Perform normal BST
     if (!root) {
       return new TreeNode(key)
     } else if (key < root.value) {
-      root.left = this.insert(root.left, key)
+      root.left = this.insertToNode(root.left, key)
     } else {
-      root.right = this.insert(root.right, key)
+      root.right = this.insertToNode(root.right, key)
     }
 
     // Update the height of the ancestor nod
@@ -40,6 +58,10 @@ export default class AVLTree {
     return root
   }
 
+  /**
+   * Rotate tree to left
+   * @param {AVLTree} root 
+   */
   leftRotate (root) {
     const subTreeA = root.right;
 
@@ -54,6 +76,10 @@ export default class AVLTree {
     return subTreeA
   }
 
+  /**
+   * Rotate tree to right
+   * @param {AVLTree} root 
+   */
   rightRotate (root) {
     const subTreeA = root.left;
 
@@ -68,14 +94,26 @@ export default class AVLTree {
     return subTreeA
   }
 
+  /**
+   * Get tree height
+   * @param {AVLTree} root 
+   */
   getHeight (root) {
     return !root ? 0 : root.height
   }
 
+  /**
+   * Get maximum tree height
+   * @param {AVLTree} root 
+   */
   maxRootHeight (root) {
     return Math.max(this.getHeight(root.left), this.getHeight(root.right))
   }
 
+  /**
+   * Get balanced height
+   * @param {AVLTree} root 
+   */
   getBalance (root) {
     return !root ? 0 : this.getHeight(root.left) - this.getHeight(root.right)
   }
