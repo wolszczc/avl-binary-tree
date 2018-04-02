@@ -5,8 +5,7 @@ Self-balancing binary search tree.
 * **insert(key:Number|String)** - Insert value to tree
 * **getHeight():Number** - Return height of tree
 
-======
-
+## Examples
 * **insert(key:Number|String)** - Insert value to tree
 ```javascript
 // Number
