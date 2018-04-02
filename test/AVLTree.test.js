@@ -16,5 +16,5 @@ test('insert two values get height two', () => {
   const tree = new AVLTree()
   tree.insert(4) 
   tree.insert(7) 
-  expect(tree.root.height).toBe(2);
+  expect(tree.height()).toBe(2);
 });
