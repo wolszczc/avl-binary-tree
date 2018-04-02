@@ -14,10 +14,10 @@ export default class AVLTree {
     this.root = Insert.insertToNode(this.root, key) 
   }
 
-  /**
+  /** Get height of tree
    * @returns height of tree
    */
-  height () {
+  getHeight () {
     return AVLHelper.getHeight(this.root)
   }
 }

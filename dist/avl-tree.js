@@ -352,13 +352,13 @@ var AVLTree = function () {
       this.root = _Insert2.default.insertToNode(this.root, key);
     }
 
-    /**
+    /** Get height of tree
      * @returns height of tree
      */
 
   }, {
-    key: 'height',
-    value: function height() {
+    key: 'getHeight',
+    value: function getHeight() {
       return _AVLHelper2.default.getHeight(this.root);
     }
   }]);

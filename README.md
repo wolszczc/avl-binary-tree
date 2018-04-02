@@ -9,12 +9,12 @@ Self-balancing binary search tree.
 tree.insert(2)
 tree.insert(12.3)
 
-//String
+// String
 tree.insert('foo')
 tree.insert('bar')
 ```
 
-* **height():Number** - Return height of tree
+* **getHeight():Number** - Return height of tree
 ```javascript
-tree.height()
+tree.getHeight()
 ```
