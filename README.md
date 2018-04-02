@@ -2,6 +2,10 @@
 Self-balancing binary search tree.
 
 ## API 
+* **insert(key:Number|String)** - Insert value to tree
+* **getHeight():Number** - Return height of tree
+
+======
 
 * **insert(key:Number|String)** - Insert value to tree
 ```javascript
