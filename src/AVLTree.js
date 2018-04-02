@@ -17,7 +17,7 @@ export default class AVLTree {
    * Insert new value to node.
    * @param {AVLTree} root 
    * @param {value} key 
-   * @returns AVLTree with new value
+   * @returns {AVLTree} with new value
    */
   insertToNode (root, key) {
     // Perform normal BST
@@ -61,6 +61,7 @@ export default class AVLTree {
   /**
    * Rotate tree to left
    * @param {AVLTree} root 
+   * @returns {AVLTree} root rotate to left
    */
   leftRotate (root) {
     const subTreeA = root.right;
@@ -79,6 +80,7 @@ export default class AVLTree {
   /**
    * Rotate tree to right
    * @param {AVLTree} root 
+   * @returns {AVLTree} root rotate to right
    */
   rightRotate (root) {
     const subTreeA = root.left;
@@ -97,6 +99,7 @@ export default class AVLTree {
   /**
    * Get tree height
    * @param {AVLTree} root 
+   * @returns {Number} height of tree
    */
   getHeight (root) {
     return !root ? 0 : root.height
@@ -105,6 +108,7 @@ export default class AVLTree {
   /**
    * Get maximum tree height
    * @param {AVLTree} root 
+   * @returns {Number} maximum height of branch's
    */
   maxRootHeight (root) {
     return Math.max(this.getHeight(root.left), this.getHeight(root.right))
@@ -113,6 +117,7 @@ export default class AVLTree {
   /**
    * Get balanced height
    * @param {AVLTree} root 
+   * @returns {Number} balanced value of branch height
    */
   getBalance (root) {
     return !root ? 0 : this.getHeight(root.left) - this.getHeight(root.right)

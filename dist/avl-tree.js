@@ -76,24 +76,17 @@
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _AVLTree = __webpack_require__(2);
 
 var _AVLTree2 = _interopRequireDefault(_AVLTree);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var tree = new _AVLTree2.default();
-
-tree.insert(1);
-tree.insert(2);
-tree.insert(3);
-tree.insert(4);
-tree.insert(2.5);
-tree.insert(5);
-tree.insert(5);
-tree.insert(5);
-
-console.log(tree.root);
+exports.default = _AVLTree2.default;
 
 /***/ }),
 /* 1 */
@@ -163,7 +156,7 @@ var AVLTree = function () {
      * Insert new value to node.
      * @param {AVLTree} root 
      * @param {value} key 
-     * @returns AVLTree with new value
+     * @returns {AVLTree} with new value
      */
 
   }, {
@@ -210,6 +203,7 @@ var AVLTree = function () {
     /**
      * Rotate tree to left
      * @param {AVLTree} root 
+     * @returns {AVLTree} root rotate to left
      */
 
   }, {
@@ -234,6 +228,7 @@ var AVLTree = function () {
     /**
      * Rotate tree to right
      * @param {AVLTree} root 
+     * @returns {AVLTree} root rotate to right
      */
 
   }, {
@@ -258,6 +253,7 @@ var AVLTree = function () {
     /**
      * Get tree height
      * @param {AVLTree} root 
+     * @returns {Number} height of tree
      */
 
   }, {
@@ -269,6 +265,7 @@ var AVLTree = function () {
     /**
      * Get maximum tree height
      * @param {AVLTree} root 
+     * @returns {Number} maximum height of branch's
      */
 
   }, {
@@ -280,6 +277,7 @@ var AVLTree = function () {
     /**
      * Get balanced height
      * @param {AVLTree} root 
+     * @returns {Number} balanced value of branch height
      */
 
   }, {
