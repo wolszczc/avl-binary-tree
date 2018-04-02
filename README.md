@@ -1,9 +1,9 @@
-# avl tree
+# avl-tree
 Self-balancing binary search tree.
 
 ## API 
 
-* **insert(key)** - Insert value to tree
+* **insert(key:Number|String)** - Insert value to tree
 ```javascript
 // Number
 tree.insert(2)
