@@ -2,8 +2,8 @@
 Self-balancing binary search tree.
 
 ## API 
-new AVLTree(comparator:function) 
-### comparator
+* new AVLTree(comparator:function) - constructor
+#### Comparator
 Default function
 ```javascript
 function compare (a, b) {
@@ -11,7 +11,7 @@ function compare (a, b) {
 }
 ```
 
-### methods
+#### Methods
 * **insert(key:any)** - Insert value to tree
 * **getHeight():Number** - Return height of tree
 
@@ -22,11 +22,11 @@ import AVLTree from 'avl-tree';
 const tree = new AVLTree()
 ```
 
-### comparator
+#### Comparator
 ```javascript
 const tree = new AVLTree((a, b) => a < b)
 ```
-
+#### Methods
 * **insert(key:any)** - Insert value to tree
 ```javascript
 // Number
