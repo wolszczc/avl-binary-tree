@@ -174,6 +174,19 @@ var AVLHelper = function () {
     value: function getBalance(root) {
       return !root ? 0 : AVLHelper.getHeight(root.left) - AVLHelper.getHeight(root.right);
     }
+
+    /**
+     * Default comparator of two values
+     * @param {Number|String} valueA 
+     * @param {Number|String} valueB 
+     * @returns {boolean} comparison valueA and valueB
+     */
+
+  }, {
+    key: "compare",
+    value: function compare(valueA, valueB) {
+      return valueA < valueB;
+    }
   }]);
 
   return AVLHelper;
@@ -199,6 +212,19 @@ var _AVLTree2 = _interopRequireDefault(_AVLTree);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _AVLTree2.default;
+
+
+var tree = new _AVLTree2.default(function (a, b) {
+  return a < b;
+});
+
+tree.insert(2);
+tree.insert(4);
+tree.insert(8);
+tree.insert(1);
+tree.insert(3);
+
+console.log(tree);
 
 /***/ }),
 /* 2 */
@@ -261,16 +287,17 @@ var Insert = function () {
      * Insert new value to node.
      * @param {AVLTree} root 
      * @param {value} key 
-     * @returns {AVLTree} with new value
+     * @param {function} comparator compare two object|value
+     * @returns {AVLTree} node with new value
      */
-    value: function insertToNode(root, key) {
+    value: function insertToNode(root, key, comparator) {
       // Perform normal BST
       if (!root) {
         return new _TreeNode2.default(key);
-      } else if (key < root.value) {
-        root.left = Insert.insertToNode(root.left, key);
+      } else if (comparator(key, root.value)) {
+        root.left = Insert.insertToNode(root.left, key, comparator);
       } else {
-        root.right = Insert.insertToNode(root.right, key);
+        root.right = Insert.insertToNode(root.right, key, comparator);
       }
 
       // Update the height of the ancestor nod
@@ -281,20 +308,48 @@ var Insert = function () {
 
       // If unbalanced
       // Left Left
-      if (balance > 1 && key < root.left.value) {
+      //      z                                      y 
+      //     / \                                   /   \
+      //    y   T4      Right Rotate (z)          x      z
+      //   / \          - - - - - - - - ->      /  \    /  \ 
+      //  x   T3                               T1  T2  T3  T4
+      // / \
+      // T1   T2
+      if (balance > 1 && comparator(key, root.value)) {
         return _AVLHelper2.default.rightRotate(root);
       }
       // Right Right 
-      if (balance < -1 && key > root.right.value) {
+      //    z                                y
+      //   /  \                            /   \ 
+      //  T1   y     Left Rotate(z)       z      x
+      //      /  \   - - - - - - - ->    / \    / \
+      //     T2   x                     T1  T2 T3  T4
+      //         / \
+      //       T3  T4
+      if (balance < -1 && !comparator(key, root.value) && key !== root.value) {
         return _AVLHelper2.default.leftRotate(root);
       }
       // Left Right 
-      if (balance > 1 && key > root.left.value) {
+      //      z                               z                           x
+      //     / \                            /   \                        /  \ 
+      //    y   T4  Left Rotate (y)        x    T4  Right Rotate(z)    y      z
+      //   / \      - - - - - - - - ->    /  \      - - - - - - - ->  / \    / \
+      // T1   x                          y    T3                    T1  T2 T3  T4
+      //     / \                        / \
+      //   T2   T3                    T1   T2
+      if (balance > 1 && !comparator(key, root.value) && key !== root.value) {
         root.left = _AVLHelper2.default.leftRotate(root.left);
         return _AVLHelper2.default.rightRotate(root);
       }
       // Right Left
-      if (balance < -1 && key < root.right.value) {
+      //    z                            z                            x
+      //   / \                          / \                          /  \ 
+      // T1   y   Right Rotate (y)    T1   x      Left Rotate(z)   z      y
+      //     / \  - - - - - - - - ->     /  \   - - - - - - - ->  / \    / \
+      //    x   T4                      T2   y                  T1  T2  T3  T4
+      //   / \                              /  \
+      // T2   T3                           T3   T4
+      if (balance < -1 && comparator(key, root.value)) {
         root.right = _AVLHelper2.default.rightRotate(root.right);
         return _AVLHelper2.default.leftRotate(root);
       }
@@ -334,22 +389,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var AVLTree = function () {
-  function AVLTree() {
+  /**
+   * Constructor AVLTree
+   * @param {Function} comparator - compare two object|value  
+   */
+  function AVLTree(comparator) {
     _classCallCheck(this, AVLTree);
 
     this.root = null;
+    this.comparator = comparator || _AVLHelper2.default.compare;
   }
 
   /**
    * Add new value to tree
-   * @param {value} key 
+   * @param {value} key
    */
 
 
   _createClass(AVLTree, [{
     key: 'insert',
     value: function insert(key) {
-      this.root = _Insert2.default.insertToNode(this.root, key);
+      this.root = _Insert2.default.insertToNode(this.root, key, this.comparator);
     }
 
     /** Get height of tree

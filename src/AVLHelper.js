@@ -63,4 +63,14 @@ export default class AVLHelper {
   static getBalance (root) {
     return !root ? 0 : AVLHelper.getHeight(root.left) - AVLHelper.getHeight(root.right)
   }
+
+  /**
+   * Default comparator of two values
+   * @param {Number|String} valueA 
+   * @param {Number|String} valueB 
+   * @returns {boolean} comparison valueA and valueB
+   */
+  static compare (valueA, valueB) {
+    return valueA < valueB
+  }
 }

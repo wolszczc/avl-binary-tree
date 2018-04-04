@@ -2,11 +2,32 @@
 Self-balancing binary search tree.
 
 ## API 
-* **insert(key:Number|String)** - Insert value to tree
+new AVLTree(comparator:function) 
+### comparator
+Default function
+```javascript
+function compare (a, b) {
+  return a < b
+}
+```
+
+### methods
+* **insert(key:any)** - Insert value to tree
 * **getHeight():Number** - Return height of tree
 
 ## Examples
-* **insert(key:Number|String)** - Insert value to tree
+
+```javascript
+import AVLTree from 'avl-tree';
+const tree = new AVLTree()
+```
+
+### comparator
+```javascript
+const tree = new AVLTree((a, b) => a < b)
+```
+
+* **insert(key:any)** - Insert value to tree
 ```javascript
 // Number
 tree.insert(2)
