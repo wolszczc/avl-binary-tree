@@ -241,12 +241,14 @@ var Search = function () {
     /**
      * Search value in root
      * @param {AVLTree} root 
-     * @param {any} key 
-     * @returns {boolean} - true when key was found, false if not
+     * @param {Any} key - serach value
+     * @param {String} path - path to value in object
+     * @returns {Boolean} - true when key was found, false if not
      */
     value: function find(root, key, path) {
       if (root) {
         var value = root.value;
+        // if object get value from key
         if (_typeof(root.value) === 'object') {
           value = Search.getValueFromObject(root.value, path);
         }
@@ -266,6 +268,14 @@ var Search = function () {
 
       return false;
     }
+
+    /**
+     * Get value from object
+     * @param {Object} key - searched object
+     * @param {String} path - path to value in object
+     * @returns {Any} - value of path in object
+     */
+
   }, {
     key: 'getValueFromObject',
     value: function getValueFromObject(key, path) {
