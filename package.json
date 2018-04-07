@@ -1,6 +1,6 @@
 {
   "name": "avl-tree",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "description": "Self-balancing binary search tree.",
   "main": "dist/avl-tree.js",
   "files": [
@@ -21,7 +21,7 @@
     "sort",
     "tree"
   ],
-  "author": "Cezary Wolszczak, wolszczc",
+  "author": "Cezary Wolszczak, wolszczc, <czarekwolszczak@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.0",
