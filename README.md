@@ -1,4 +1,4 @@
-# avl-tree
+# avl-binary-tree
 Self-balancing binary search tree.
 
 ## API 
@@ -19,7 +19,7 @@ function compare (a, b) {
 ## Examples
 
 ```javascript
-import AVLTree from 'avl-tree';
+import AVLTree from 'avl-binary-tree';
 const tree = new AVLTree()
 ```
 
