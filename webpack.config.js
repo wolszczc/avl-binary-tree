@@ -5,7 +5,9 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'avl-tree.js'
+    filename: 'avl-tree.js',
+    libraryTarget: 'commonjs2',
+    pathinfo: false
   },
   devtool: 'source-map',
   optimization: {
