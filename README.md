@@ -1,4 +1,4 @@
-# avl-binary-tree
+# avl-binary-tree [![npm version](https://badge.fury.io/js/avl-binary-tree.svg)](https://badge.fury.io/js/avl-binary-tree)
 Self-balancing binary search tree.
 
 ## API 
