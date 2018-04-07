@@ -66,7 +66,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -205,7 +205,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AVLTree = __webpack_require__(4);
+var _AVLTree = __webpack_require__(5);
 
 var _AVLTree2 = _interopRequireDefault(_AVLTree);
 
@@ -213,21 +213,77 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _AVLTree2.default;
 
-
-var tree = new _AVLTree2.default(function (a, b) {
-  return a < b;
-});
-
-tree.insert(2);
-tree.insert(4);
-tree.insert(8);
-tree.insert(1);
-tree.insert(3);
-
-console.log(tree);
-
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Search = function () {
+  function Search() {
+    _classCallCheck(this, Search);
+  }
+
+  _createClass(Search, null, [{
+    key: 'find',
+
+    /**
+     * Search value in root
+     * @param {AVLTree} root 
+     * @param {any} key 
+     * @returns {boolean} - true when key was found, false if not
+     */
+    value: function find(root, key, path) {
+      if (root) {
+        var value = root.value;
+        if (_typeof(root.value) === 'object') {
+          value = Search.getValueFromObject(root.value, path);
+        }
+        if (value === key) {
+          return true;
+        }
+
+        // Find the element in left sub-tree
+        if (Search.find(root.left, key, path) === true) {
+          return true;
+        }
+        // Find the element in right sub-tree
+        else if (Search.find(root.right, key, path) === true) {
+            return true;
+          }
+      }
+
+      return false;
+    }
+  }, {
+    key: 'getValueFromObject',
+    value: function getValueFromObject(key, path) {
+      var value = key;
+      path.split('.').forEach(function (keyName) {
+        value = value[keyName];
+      });
+      return value;
+    }
+  }]);
+
+  return Search;
+}();
+
+exports.default = Search;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -251,7 +307,7 @@ var TreeNode = function TreeNode(value) {
 exports.default = TreeNode;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -263,7 +319,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _TreeNode = __webpack_require__(2);
+var _TreeNode = __webpack_require__(3);
 
 var _TreeNode2 = _interopRequireDefault(_TreeNode);
 
@@ -286,7 +342,7 @@ var Insert = function () {
     /**
      * Insert new value to node.
      * @param {AVLTree} root 
-     * @param {value} key 
+     * @param {any} key 
      * @param {function} comparator compare two object|value
      * @returns {AVLTree} node with new value
      */
@@ -364,7 +420,7 @@ var Insert = function () {
 exports.default = Insert;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -376,13 +432,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Insert = __webpack_require__(3);
+var _Insert = __webpack_require__(4);
 
 var _Insert2 = _interopRequireDefault(_Insert);
 
 var _AVLHelper = __webpack_require__(0);
 
 var _AVLHelper2 = _interopRequireDefault(_AVLHelper);
+
+var _Search = __webpack_require__(2);
+
+var _Search2 = _interopRequireDefault(_Search);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -402,7 +462,7 @@ var AVLTree = function () {
 
   /**
    * Add new value to tree
-   * @param {value} key
+   * @param {Any} key
    */
 
 
@@ -421,6 +481,19 @@ var AVLTree = function () {
     value: function getHeight() {
       return _AVLHelper2.default.getHeight(this.root);
     }
+
+    /**
+     * Search value in tree
+     * @param {Any} value 
+     * @param {String} path - list of keys in object path
+     * @returns {Boolean} - true when value was found, false if not
+     */
+
+  }, {
+    key: 'find',
+    value: function find(value, path) {
+      return _Search2.default.find(this.root, value, path);
+    }
   }]);
 
   return AVLTree;
@@ -429,7 +502,7 @@ var AVLTree = function () {
 exports.default = AVLTree;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);

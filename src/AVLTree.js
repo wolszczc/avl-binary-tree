@@ -1,5 +1,6 @@
 import Insert from './Insert'
 import AVLHelper from './AVLHelper'
+import Search from './Search'
 
 export default class AVLTree {
   /**
@@ -13,7 +14,7 @@ export default class AVLTree {
 
   /**
    * Add new value to tree
-   * @param {value} key
+   * @param {Any} key
    */
   insert (key) {
     this.root = Insert.insertToNode(this.root, key, this.comparator) 
@@ -25,4 +26,15 @@ export default class AVLTree {
   getHeight () {
     return AVLHelper.getHeight(this.root)
   }
+
+  /**
+   * Search value in tree
+   * @param {Any} value 
+   * @param {String} path - list of keys in object path
+   * @returns {Boolean} - true when value was found, false if not
+   */
+  find (value, path) {
+    return Search.find(this.root, value, path)
+  }
+
 }

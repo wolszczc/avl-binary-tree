@@ -9,3 +9,8 @@ test('insert string', () => {
   const tree = Insert.insertToNode(null, 'test')
   expect(tree.value).toBe('test');
 });
+
+test('insert object', () => {
+  const tree = Insert.insertToNode(null, {foo:'test'})
+  expect(tree.value.foo).toBe('test');
+});

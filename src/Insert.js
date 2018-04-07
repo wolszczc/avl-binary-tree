@@ -5,7 +5,7 @@ export default class Insert {
   /**
    * Insert new value to node.
    * @param {AVLTree} root 
-   * @param {value} key 
+   * @param {any} key 
    * @param {function} comparator compare two object|value
    * @returns {AVLTree} node with new value
    */
