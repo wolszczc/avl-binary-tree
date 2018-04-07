@@ -1,6 +1,6 @@
 {
   "name": "avl-binary-tree",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Self-balancing binary search tree.",
   "main": "dist/avl-tree.js",
   "files": [
