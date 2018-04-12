@@ -1,5 +1,5 @@
 import TreeNode from './TreeNode'
-import AVLHelper from './AVLHelper'
+import Helper from './Helper'
 
 export default class Insert {
   /**
@@ -20,10 +20,10 @@ export default class Insert {
     }
 
     // Update the height of the ancestor nod
-    root.height = 1 + AVLHelper.maxRootHeight(root)
+    root.height = 1 + Helper.maxRootHeight(root)
 
     // Get the balance factor
-    const balance = AVLHelper.getBalance(root)
+    const balance = Helper.getBalance(root)
 
     // If unbalanced
     // Left Left
@@ -35,7 +35,7 @@ export default class Insert {
     // / \
     // T1   T2
     if (balance > 1 && comparator(key, root.value)) {
-      return AVLHelper.rightRotate(root)
+      return Helper.rightRotate(root)
     }
     // Right Right 
     //    z                                y
@@ -46,7 +46,7 @@ export default class Insert {
     //         / \
     //       T3  T4
     if (balance < -1 && comparator(root.value, key)) {
-      return AVLHelper.leftRotate(root)
+      return Helper.leftRotate(root)
     }
     // Left Right 
     //      z                               z                           x
@@ -57,8 +57,8 @@ export default class Insert {
     //     / \                        / \
     //   T2   T3                    T1   T2
     if (balance > 1 && comparator(root.value, key)) {
-      root.left = AVLHelper.leftRotate(root.left)
-      return AVLHelper.rightRotate(root)
+      root.left = Helper.leftRotate(root.left)
+      return Helper.rightRotate(root)
     }
     // Right Left
     //    z                            z                            x
@@ -69,8 +69,8 @@ export default class Insert {
     //   / \                              /  \
     // T2   T3                           T3   T4
     if (balance < -1 && comparator(key, root.value)) {
-      root.right = AVLHelper.rightRotate(root.right)
-      return AVLHelper.leftRotate(root)
+      root.right = Helper.rightRotate(root.right)
+      return Helper.leftRotate(root)
     }
 
     return root

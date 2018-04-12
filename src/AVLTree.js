@@ -1,5 +1,5 @@
 import Insert from './Insert'
-import AVLHelper from './AVLHelper'
+import Helper from './Helper'
 import Search from './Search'
 import Delete from './Delete'
 
@@ -10,7 +10,7 @@ export default class AVLTree {
    */
   constructor (comparator) {
     this.root = null
-    this.comparator = comparator || AVLHelper.compare
+    this.comparator = comparator || Helper.compare
   }
 
   /**
@@ -25,7 +25,7 @@ export default class AVLTree {
    * @returns height of tree
    */
   getHeight () {
-    return AVLHelper.getHeight(this.root)
+    return Helper.getHeight(this.root)
   }
 
   /**
@@ -53,6 +53,6 @@ export default class AVLTree {
    * @returns {AVLTree} root with the smalest value
    */
   getMinValue() {
-    return AVLHelper.getMinValueNode(this.root).value
+    return Helper.getMinValueNode(this.root).value
   }
 }

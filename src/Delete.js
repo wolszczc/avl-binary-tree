@@ -1,4 +1,4 @@
-import AVLHelper from './AVLHelper'
+import Helper from './Helper'
 
 export default class Delete {
   /**
@@ -17,7 +17,7 @@ export default class Delete {
       let value = root.value
       // if object get value from key
       if(typeof root.value === 'object') {
-        value = AVLHelper.getValueFromObject(root.value, path)
+        value = Helper.getValueFromObject(root.value, path)
       }
       if (key < value) {
         root.left = Delete.deleteNode(root.left, key, path, comparator)
@@ -33,7 +33,7 @@ export default class Delete {
           root = null 
           return rootLeft
         }
-        const minValueRoot = AVLHelper.getMinValueNode(root.right)
+        const minValueRoot = Helper.getMinValueNode(root.right)
         root.value = minValueRoot.value
         root.right = Delete.deleteNode(root.right, minValueRoot, comparator)
       }
@@ -45,29 +45,29 @@ export default class Delete {
     }
 
     // Update the height of the ancestor node
-    root.height = 1 + AVLHelper.maxRootHeight(root)
+    root.height = 1 + Helper.maxRootHeight(root)
     
     // Get the balance factor
-    const balance = AVLHelper.getBalance(root)
+    const balance = Helper.getBalance(root)
 
     // If the node is unbalanced
     // Left Left
-    if (balance > 1 && AVLHelper.getBalance(root.left) >= 0 ) {
-      return AVLHelper.rightRotate(root)
+    if (balance > 1 && Helper.getBalance(root.left) >= 0 ) {
+      return Helper.rightRotate(root)
     }
     // Right Right
-    if (balance < -1 && AVLHelper.getBalance(root.right) <= 0 ) {
-      return AVLHelper.leftRotate(root)
+    if (balance < -1 && Helper.getBalance(root.right) <= 0 ) {
+      return Helper.leftRotate(root)
     }
     // Left Right
-    if (balance > 1 && AVLHelper.getBalance(root.left) < 0 ) {
-      root.left = AVLHelper.leftRotate(root.left)
-      return AVLHelper.rightRotate(root)
+    if (balance > 1 && Helper.getBalance(root.left) < 0 ) {
+      root.left = Helper.leftRotate(root.left)
+      return Helper.rightRotate(root)
     }
     // Right Left
-    if (balance < -1 && AVLHelper.getBalance(root.right) > 0 ) {
-      root.right = AVLHelper.rightRotate(root.right)
-      return AVLHelper.leftRotate(root)
+    if (balance < -1 && Helper.getBalance(root.right) > 0 ) {
+      root.right = Helper.rightRotate(root.right)
+      return Helper.leftRotate(root)
     }
     
     return root

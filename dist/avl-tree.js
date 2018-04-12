@@ -85,12 +85,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AVLHelper = function () {
-  function AVLHelper() {
-    _classCallCheck(this, AVLHelper);
+var Helper = function () {
+  function Helper() {
+    _classCallCheck(this, Helper);
   }
 
-  _createClass(AVLHelper, null, [{
+  _createClass(Helper, null, [{
     key: 'leftRotate',
 
     /**
@@ -108,8 +108,8 @@ var AVLHelper = function () {
       var _ref = [root, subTreeA.left];
       subTreeA.left = _ref[0];
       root.right = _ref[1];
-      root.height = 1 + AVLHelper.maxRootHeight(root);
-      subTreeA.height = 1 + AVLHelper.maxRootHeight(subTreeA);
+      root.height = 1 + Helper.maxRootHeight(root);
+      subTreeA.height = 1 + Helper.maxRootHeight(subTreeA);
 
       // the new root
       return subTreeA;
@@ -133,8 +133,8 @@ var AVLHelper = function () {
       var _ref2 = [root, subTreeA.right];
       subTreeA.right = _ref2[0];
       root.left = _ref2[1];
-      root.height = 1 + AVLHelper.maxRootHeight(root);
-      subTreeA.height = 1 + AVLHelper.maxRootHeight(subTreeA);
+      root.height = 1 + Helper.maxRootHeight(root);
+      subTreeA.height = 1 + Helper.maxRootHeight(subTreeA);
 
       // the new root
       return subTreeA;
@@ -161,7 +161,7 @@ var AVLHelper = function () {
   }, {
     key: 'maxRootHeight',
     value: function maxRootHeight(root) {
-      return Math.max(AVLHelper.getHeight(root.left), AVLHelper.getHeight(root.right));
+      return Math.max(Helper.getHeight(root.left), Helper.getHeight(root.right));
     }
 
     /**
@@ -173,7 +173,7 @@ var AVLHelper = function () {
   }, {
     key: 'getBalance',
     value: function getBalance(root) {
-      return !root ? 0 : AVLHelper.getHeight(root.left) - AVLHelper.getHeight(root.right);
+      return !root ? 0 : Helper.getHeight(root.left) - Helper.getHeight(root.right);
     }
 
     /**
@@ -201,7 +201,7 @@ var AVLHelper = function () {
       if (root === null || root.left === null) {
         return root;
       }
-      return AVLHelper.getMinValueNode(root.left);
+      return Helper.getMinValueNode(root.left);
     }
 
     /**
@@ -222,10 +222,10 @@ var AVLHelper = function () {
     }
   }]);
 
-  return AVLHelper;
+  return Helper;
 }();
 
-exports.default = AVLHelper;
+exports.default = Helper;
 
 /***/ }),
 /* 1 */
@@ -261,9 +261,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _AVLHelper = __webpack_require__(0);
+var _Helper = __webpack_require__(0);
 
-var _AVLHelper2 = _interopRequireDefault(_AVLHelper);
+var _Helper2 = _interopRequireDefault(_Helper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -293,7 +293,7 @@ var Delete = function () {
         var value = root.value;
         // if object get value from key
         if (_typeof(root.value) === 'object') {
-          value = _AVLHelper2.default.getValueFromObject(root.value, path);
+          value = _Helper2.default.getValueFromObject(root.value, path);
         }
         if (key < value) {
           root.left = Delete.deleteNode(root.left, key, path, comparator);
@@ -309,7 +309,7 @@ var Delete = function () {
             root = null;
             return rootLeft;
           }
-          var minValueRoot = _AVLHelper2.default.getMinValueNode(root.right);
+          var minValueRoot = _Helper2.default.getMinValueNode(root.right);
           root.value = minValueRoot.value;
           root.right = Delete.deleteNode(root.right, minValueRoot, comparator);
         }
@@ -321,29 +321,29 @@ var Delete = function () {
       }
 
       // Update the height of the ancestor node
-      root.height = 1 + _AVLHelper2.default.maxRootHeight(root);
+      root.height = 1 + _Helper2.default.maxRootHeight(root);
 
       // Get the balance factor
-      var balance = _AVLHelper2.default.getBalance(root);
+      var balance = _Helper2.default.getBalance(root);
 
       // If the node is unbalanced
       // Left Left
-      if (balance > 1 && _AVLHelper2.default.getBalance(root.left) >= 0) {
-        return _AVLHelper2.default.rightRotate(root);
+      if (balance > 1 && _Helper2.default.getBalance(root.left) >= 0) {
+        return _Helper2.default.rightRotate(root);
       }
       // Right Right
-      if (balance < -1 && _AVLHelper2.default.getBalance(root.right) <= 0) {
-        return _AVLHelper2.default.leftRotate(root);
+      if (balance < -1 && _Helper2.default.getBalance(root.right) <= 0) {
+        return _Helper2.default.leftRotate(root);
       }
       // Left Right
-      if (balance > 1 && _AVLHelper2.default.getBalance(root.left) < 0) {
-        root.left = _AVLHelper2.default.leftRotate(root.left);
-        return _AVLHelper2.default.rightRotate(root);
+      if (balance > 1 && _Helper2.default.getBalance(root.left) < 0) {
+        root.left = _Helper2.default.leftRotate(root.left);
+        return _Helper2.default.rightRotate(root);
       }
       // Right Left
-      if (balance < -1 && _AVLHelper2.default.getBalance(root.right) > 0) {
-        root.right = _AVLHelper2.default.rightRotate(root.right);
-        return _AVLHelper2.default.leftRotate(root);
+      if (balance < -1 && _Helper2.default.getBalance(root.right) > 0) {
+        root.right = _Helper2.default.rightRotate(root.right);
+        return _Helper2.default.leftRotate(root);
       }
 
       return root;
@@ -370,9 +370,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _AVLHelper = __webpack_require__(0);
+var _Helper = __webpack_require__(0);
 
-var _AVLHelper2 = _interopRequireDefault(_AVLHelper);
+var _Helper2 = _interopRequireDefault(_Helper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -398,7 +398,7 @@ var Search = function () {
         var value = root.value;
         // if object get value from key
         if (_typeof(root.value) === 'object') {
-          value = _AVLHelper2.default.getValueFromObject(root.value, path);
+          value = _Helper2.default.getValueFromObject(root.value, path);
         }
         if (value === key) {
           return true;
@@ -464,9 +464,9 @@ var _TreeNode = __webpack_require__(4);
 
 var _TreeNode2 = _interopRequireDefault(_TreeNode);
 
-var _AVLHelper = __webpack_require__(0);
+var _Helper = __webpack_require__(0);
 
-var _AVLHelper2 = _interopRequireDefault(_AVLHelper);
+var _Helper2 = _interopRequireDefault(_Helper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -498,10 +498,10 @@ var Insert = function () {
       }
 
       // Update the height of the ancestor nod
-      root.height = 1 + _AVLHelper2.default.maxRootHeight(root);
+      root.height = 1 + _Helper2.default.maxRootHeight(root);
 
       // Get the balance factor
-      var balance = _AVLHelper2.default.getBalance(root);
+      var balance = _Helper2.default.getBalance(root);
 
       // If unbalanced
       // Left Left
@@ -513,7 +513,7 @@ var Insert = function () {
       // / \
       // T1   T2
       if (balance > 1 && comparator(key, root.value)) {
-        return _AVLHelper2.default.rightRotate(root);
+        return _Helper2.default.rightRotate(root);
       }
       // Right Right 
       //    z                                y
@@ -524,7 +524,7 @@ var Insert = function () {
       //         / \
       //       T3  T4
       if (balance < -1 && comparator(root.value, key)) {
-        return _AVLHelper2.default.leftRotate(root);
+        return _Helper2.default.leftRotate(root);
       }
       // Left Right 
       //      z                               z                           x
@@ -535,8 +535,8 @@ var Insert = function () {
       //     / \                        / \
       //   T2   T3                    T1   T2
       if (balance > 1 && comparator(root.value, key)) {
-        root.left = _AVLHelper2.default.leftRotate(root.left);
-        return _AVLHelper2.default.rightRotate(root);
+        root.left = _Helper2.default.leftRotate(root.left);
+        return _Helper2.default.rightRotate(root);
       }
       // Right Left
       //    z                            z                            x
@@ -547,8 +547,8 @@ var Insert = function () {
       //   / \                              /  \
       // T2   T3                           T3   T4
       if (balance < -1 && comparator(key, root.value)) {
-        root.right = _AVLHelper2.default.rightRotate(root.right);
-        return _AVLHelper2.default.leftRotate(root);
+        root.right = _Helper2.default.rightRotate(root.right);
+        return _Helper2.default.leftRotate(root);
       }
 
       return root;
@@ -577,9 +577,9 @@ var _Insert = __webpack_require__(5);
 
 var _Insert2 = _interopRequireDefault(_Insert);
 
-var _AVLHelper = __webpack_require__(0);
+var _Helper = __webpack_require__(0);
 
-var _AVLHelper2 = _interopRequireDefault(_AVLHelper);
+var _Helper2 = _interopRequireDefault(_Helper);
 
 var _Search = __webpack_require__(3);
 
@@ -602,7 +602,7 @@ var AVLTree = function () {
     _classCallCheck(this, AVLTree);
 
     this.root = null;
-    this.comparator = comparator || _AVLHelper2.default.compare;
+    this.comparator = comparator || _Helper2.default.compare;
   }
 
   /**
@@ -624,7 +624,7 @@ var AVLTree = function () {
   }, {
     key: 'getHeight',
     value: function getHeight() {
-      return _AVLHelper2.default.getHeight(this.root);
+      return _Helper2.default.getHeight(this.root);
     }
 
     /**
@@ -661,7 +661,7 @@ var AVLTree = function () {
   }, {
     key: 'getMinValue',
     value: function getMinValue() {
-      return _AVLHelper2.default.getMinValueNode(this.root).value;
+      return _Helper2.default.getMinValueNode(this.root).value;
     }
   }]);
 

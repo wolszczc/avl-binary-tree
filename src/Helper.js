@@ -1,4 +1,4 @@
-export default class AVLHelper {
+export default class Helper {
   /**
    * Rotate tree to left
    * @param {AVLTree} root 
@@ -11,8 +11,8 @@ export default class AVLHelper {
     [subTreeA.left, root.right] = [root, subTreeA.left]
 
     // update heights
-    root.height = 1 + AVLHelper.maxRootHeight(root)
-    subTreeA.height = 1 + AVLHelper.maxRootHeight(subTreeA)
+    root.height = 1 + Helper.maxRootHeight(root)
+    subTreeA.height = 1 + Helper.maxRootHeight(subTreeA)
 
     // the new root
     return subTreeA
@@ -30,8 +30,8 @@ export default class AVLHelper {
     [subTreeA.right, root.left] = [root, subTreeA.right]
 
     // update heights
-    root.height = 1 + AVLHelper.maxRootHeight(root)
-    subTreeA.height = 1 + AVLHelper.maxRootHeight(subTreeA)
+    root.height = 1 + Helper.maxRootHeight(root)
+    subTreeA.height = 1 + Helper.maxRootHeight(subTreeA)
 
     // the new root
     return subTreeA
@@ -52,7 +52,7 @@ export default class AVLHelper {
    * @returns {Number} maximum height of branchs
    */
   static maxRootHeight (root) {
-    return Math.max(AVLHelper.getHeight(root.left), AVLHelper.getHeight(root.right))
+    return Math.max(Helper.getHeight(root.left), Helper.getHeight(root.right))
   }
 
   /**
@@ -61,7 +61,7 @@ export default class AVLHelper {
    * @returns {Number} balanced value of branch height
    */
   static getBalance (root) {
-    return !root ? 0 : AVLHelper.getHeight(root.left) - AVLHelper.getHeight(root.right)
+    return !root ? 0 : Helper.getHeight(root.left) - Helper.getHeight(root.right)
   }
 
   /**
@@ -83,7 +83,7 @@ export default class AVLHelper {
     if (root === null || root.left === null) {
       return root
     }
-    return AVLHelper.getMinValueNode(root.left)
+    return Helper.getMinValueNode(root.left)
   }
 
   /**

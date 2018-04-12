@@ -1,4 +1,4 @@
-import AVLHelper from './AVLHelper'
+import Helper from './Helper'
 
 export default class Search {
   /**
@@ -13,7 +13,7 @@ export default class Search {
       let value = root.value
       // if object get value from key
       if(typeof root.value === 'object') {
-        value = AVLHelper.getValueFromObject(root.value, path)
+        value = Helper.getValueFromObject(root.value, path)
       }
       if (value === key) {
         return true
