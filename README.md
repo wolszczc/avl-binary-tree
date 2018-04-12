@@ -7,7 +7,7 @@ npm i avl-binary-tree
 yarn add avl-binary-tree
 ```
 ## API 
-* `new AVLTree(comparator:function)` - constructor
+* `new AVLTree([comparator:function])` - constructor
 #### Comparator
 Default compare function
 ```javascript
@@ -45,7 +45,7 @@ tree.getHeight()
 ```javascript
 tree.getMinValue()
 ```
-* `find(value:any, path:string):boolean` - Return true when value was found, false if not. When value in tree is object use param `path` to define keys path e.g. `'foo.bar'`.
+* `find(value:any, [path:string]):boolean` - Return true when value was found, false if not. When value in tree is object use param `path` to define keys path e.g. `'foo.bar'`.
 ```javascript
 tree.find(8, 'foo.bar')
 ```
