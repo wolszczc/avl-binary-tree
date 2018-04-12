@@ -1,6 +1,7 @@
 import Insert from './Insert'
 import AVLHelper from './AVLHelper'
 import Search from './Search'
+import Delete from './Delete'
 
 export default class AVLTree {
   /**
@@ -37,4 +38,21 @@ export default class AVLTree {
     return Search.find(this.root, value, path)
   }
 
+  /**
+   * Delete node with input value
+   * @param {Any} value 
+   * @param {String} path - list of keys in object path
+   */
+  delete (value, path) {
+    this.root = Delete.deleteNode(this.root, value, path, this.comparator)
+  }
+
+  /**
+   * Get minimum root of tree. Depends from comparator.
+   * @param {AVLTree} root 
+   * @returns {AVLTree} root with the smalest value
+   */
+  getMinValue() {
+    return AVLHelper.getMinValueNode(this.root).value
+  }
 }

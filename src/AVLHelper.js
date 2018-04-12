@@ -73,4 +73,30 @@ export default class AVLHelper {
   static compare (valueA, valueB) {
     return valueA < valueB
   }
+
+  /**
+   * Get minimum root of tree. Depends from comparator.
+   * @param {AVLTree} root 
+   * @returns {AVLTree} root with the smalest value
+   */
+  static getMinValueNode(root) {
+    if (root === null || root.left === null) {
+      return root
+    }
+    return AVLHelper.getMinValueNode(root.left)
+  }
+
+  /**
+   * Get value from object
+   * @param {Object} key - searched object
+   * @param {String} path - path to value in object
+   * @returns {Any} - value of path in object
+   */
+  static getValueFromObject (key, path) {
+    let value = key
+    path.split('.').forEach((keyName) => {
+      value = value[keyName]
+    })
+    return value
+  }
 }

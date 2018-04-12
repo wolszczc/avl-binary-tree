@@ -18,3 +18,10 @@ test('insert two values get height two', () => {
   tree.insert(7) 
   expect(tree.getHeight()).toBe(2);
 });
+
+test('min value of tree', () => {
+  const tree = new AVLTree()
+  tree.insert(4) 
+  tree.insert(7) 
+  expect(tree.getMinValue()).toBe(4);
+});

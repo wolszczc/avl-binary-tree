@@ -1,3 +1,5 @@
+import AVLHelper from './AVLHelper'
+
 export default class Search {
   /**
    * Search value in root
@@ -11,7 +13,7 @@ export default class Search {
       let value = root.value
       // if object get value from key
       if(typeof root.value === 'object') {
-        value = Search.getValueFromObject(root.value, path)
+        value = AVLHelper.getValueFromObject(root.value, path)
       }
       if (value === key) {
         return true
@@ -28,19 +30,5 @@ export default class Search {
     }
 
     return false
-  }
-
-  /**
-   * Get value from object
-   * @param {Object} key - searched object
-   * @param {String} path - path to value in object
-   * @returns {Any} - value of path in object
-   */
-  static getValueFromObject (key, path) {
-    let value = key
-    path.split('.').forEach((keyName) => {
-      value = value[keyName]
-    })
-    return value
   }
 }

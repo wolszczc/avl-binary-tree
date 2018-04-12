@@ -18,7 +18,10 @@ function compare (a, b) {
 #### Methods
 * `insert(key:any)` - Insert value to tree.
 * `getHeight():number` - Return height of tree.
-* `find(value:any, path:string):boolean` - Return true when value was found, false if not. When value in tree is object use param `path` to define key's path e.g. `'foo.bar'`.
+* `getMinValue():any` - Return the smallest value of tree.
+* `find(value:any, [path:string]):boolean` - Return true when value was 
+found, false if not. When value in tree is object use param `path` to define key's path e.g. `'foo.bar'`.
+* `delete(value:any, [path:string])` - Delete root with input value. `path` works similar to functions `find`.
 ## Examples
 ```javascript
 import AVLTree from 'avl-binary-tree';
@@ -34,11 +37,19 @@ const tree = new AVLTree((a, b) => a < b)
 tree.insert(1)
 tree.insert(3)
 ```
-* `getHeight():Number` - Return height of tree
+* `getHeight():number` - Return height of tree
 ```javascript
 tree.getHeight()
+```
+* `getMinValue():any` - Return the smallest value of tree.
+```javascript
+tree.getMinValue()
 ```
 * `find(value:any, path:string):boolean` - Return true when value was found, false if not. When value in tree is object use param `path` to define keys path e.g. `'foo.bar'`.
 ```javascript
 tree.find(8, 'foo.bar')
+```
+* `delete(value:any, [path:string])` - Delete root with input value. `path` works similar to functions `find`.
+```javascript
+tree.delete(8, 'foo.bar')
 ```

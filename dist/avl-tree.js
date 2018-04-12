@@ -67,7 +67,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,7 +91,7 @@ var AVLHelper = function () {
   }
 
   _createClass(AVLHelper, null, [{
-    key: "leftRotate",
+    key: 'leftRotate',
 
     /**
      * Rotate tree to left
@@ -122,7 +122,7 @@ var AVLHelper = function () {
      */
 
   }, {
-    key: "rightRotate",
+    key: 'rightRotate',
     value: function rightRotate(root) {
       var subTreeA = root.left;
 
@@ -147,7 +147,7 @@ var AVLHelper = function () {
      */
 
   }, {
-    key: "getHeight",
+    key: 'getHeight',
     value: function getHeight(root) {
       return !root ? 0 : root.height;
     }
@@ -159,7 +159,7 @@ var AVLHelper = function () {
      */
 
   }, {
-    key: "maxRootHeight",
+    key: 'maxRootHeight',
     value: function maxRootHeight(root) {
       return Math.max(AVLHelper.getHeight(root.left), AVLHelper.getHeight(root.right));
     }
@@ -171,7 +171,7 @@ var AVLHelper = function () {
      */
 
   }, {
-    key: "getBalance",
+    key: 'getBalance',
     value: function getBalance(root) {
       return !root ? 0 : AVLHelper.getHeight(root.left) - AVLHelper.getHeight(root.right);
     }
@@ -184,9 +184,41 @@ var AVLHelper = function () {
      */
 
   }, {
-    key: "compare",
+    key: 'compare',
     value: function compare(valueA, valueB) {
       return valueA < valueB;
+    }
+
+    /**
+     * Get minimum root of tree. Depends from comparator.
+     * @param {AVLTree} root 
+     * @returns {AVLTree} root with the smalest value
+     */
+
+  }, {
+    key: 'getMinValueNode',
+    value: function getMinValueNode(root) {
+      if (root === null || root.left === null) {
+        return root;
+      }
+      return AVLHelper.getMinValueNode(root.left);
+    }
+
+    /**
+     * Get value from object
+     * @param {Object} key - searched object
+     * @param {String} path - path to value in object
+     * @returns {Any} - value of path in object
+     */
+
+  }, {
+    key: 'getValueFromObject',
+    value: function getValueFromObject(key, path) {
+      var value = key;
+      path.split('.').forEach(function (keyName) {
+        value = value[keyName];
+      });
+      return value;
     }
   }]);
 
@@ -206,7 +238,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AVLTree = __webpack_require__(5);
+var _AVLTree = __webpack_require__(6);
 
 var _AVLTree2 = _interopRequireDefault(_AVLTree);
 
@@ -228,6 +260,121 @@ Object.defineProperty(exports, "__esModule", {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _AVLHelper = __webpack_require__(0);
+
+var _AVLHelper2 = _interopRequireDefault(_AVLHelper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Delete = function () {
+  function Delete() {
+    _classCallCheck(this, Delete);
+  }
+
+  _createClass(Delete, null, [{
+    key: 'deleteNode',
+
+    /**
+     * Delete node with input value
+     * @param {AVLTree} root 
+     * @param {Any} key 
+     * @param {String} path - list of keys in object path
+     * @param {Function} comparator compare two object|value
+     * @returns {AVLTree} new tree without deleted node
+     */
+    value: function deleteNode(root, key, path, comparator) {
+      // Perform standard BST delete
+      if (!root) {
+        return root;
+      } else {
+        var value = root.value;
+        // if object get value from key
+        if (_typeof(root.value) === 'object') {
+          value = _AVLHelper2.default.getValueFromObject(root.value, path);
+        }
+        if (key < value) {
+          root.left = Delete.deleteNode(root.left, key, path, comparator);
+        } else if (key > value) {
+          root.right = Delete.deleteNode(root.right, key, path, comparator);
+        } else {
+          if (!root.left) {
+            var rootRight = root.right;
+            root = null;
+            return rootRight;
+          } else if (!root.right) {
+            var rootLeft = root.left;
+            root = null;
+            return rootLeft;
+          }
+          var minValueRoot = _AVLHelper2.default.getMinValueNode(root.right);
+          root.value = minValueRoot.value;
+          root.right = Delete.deleteNode(root.right, minValueRoot, comparator);
+        }
+      }
+
+      // If the tree has only one node
+      if (!root) {
+        return root;
+      }
+
+      // Update the height of the ancestor node
+      root.height = 1 + _AVLHelper2.default.maxRootHeight(root);
+
+      // Get the balance factor
+      var balance = _AVLHelper2.default.getBalance(root);
+
+      // If the node is unbalanced
+      // Left Left
+      if (balance > 1 && _AVLHelper2.default.getBalance(root.left) >= 0) {
+        return _AVLHelper2.default.rightRotate(root);
+      }
+      // Right Right
+      if (balance < -1 && _AVLHelper2.default.getBalance(root.right) <= 0) {
+        return _AVLHelper2.default.leftRotate(root);
+      }
+      // Left Right
+      if (balance > 1 && _AVLHelper2.default.getBalance(root.left) < 0) {
+        root.left = _AVLHelper2.default.leftRotate(root.left);
+        return _AVLHelper2.default.rightRotate(root);
+      }
+      // Right Left
+      if (balance < -1 && _AVLHelper2.default.getBalance(root.right) > 0) {
+        root.right = _AVLHelper2.default.rightRotate(root.right);
+        return _AVLHelper2.default.leftRotate(root);
+      }
+
+      return root;
+    }
+  }]);
+
+  return Delete;
+}();
+
+exports.default = Delete;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _AVLHelper = __webpack_require__(0);
+
+var _AVLHelper2 = _interopRequireDefault(_AVLHelper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -251,7 +398,7 @@ var Search = function () {
         var value = root.value;
         // if object get value from key
         if (_typeof(root.value) === 'object') {
-          value = Search.getValueFromObject(root.value, path);
+          value = _AVLHelper2.default.getValueFromObject(root.value, path);
         }
         if (value === key) {
           return true;
@@ -269,23 +416,6 @@ var Search = function () {
 
       return false;
     }
-
-    /**
-     * Get value from object
-     * @param {Object} key - searched object
-     * @param {String} path - path to value in object
-     * @returns {Any} - value of path in object
-     */
-
-  }, {
-    key: 'getValueFromObject',
-    value: function getValueFromObject(key, path) {
-      var value = key;
-      path.split('.').forEach(function (keyName) {
-        value = value[keyName];
-      });
-      return value;
-    }
   }]);
 
   return Search;
@@ -294,7 +424,7 @@ var Search = function () {
 exports.default = Search;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -318,7 +448,7 @@ var TreeNode = function TreeNode(value) {
 exports.default = TreeNode;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -330,7 +460,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _TreeNode = __webpack_require__(3);
+var _TreeNode = __webpack_require__(4);
 
 var _TreeNode2 = _interopRequireDefault(_TreeNode);
 
@@ -393,7 +523,7 @@ var Insert = function () {
       //     T2   x                     T1  T2 T3  T4
       //         / \
       //       T3  T4
-      if (balance < -1 && !comparator(key, root.value) && key !== root.value) {
+      if (balance < -1 && comparator(root.value, key)) {
         return _AVLHelper2.default.leftRotate(root);
       }
       // Left Right 
@@ -404,7 +534,7 @@ var Insert = function () {
       // T1   x                          y    T3                    T1  T2 T3  T4
       //     / \                        / \
       //   T2   T3                    T1   T2
-      if (balance > 1 && !comparator(key, root.value) && key !== root.value) {
+      if (balance > 1 && comparator(root.value, key)) {
         root.left = _AVLHelper2.default.leftRotate(root.left);
         return _AVLHelper2.default.rightRotate(root);
       }
@@ -431,7 +561,7 @@ var Insert = function () {
 exports.default = Insert;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -443,7 +573,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Insert = __webpack_require__(4);
+var _Insert = __webpack_require__(5);
 
 var _Insert2 = _interopRequireDefault(_Insert);
 
@@ -451,9 +581,13 @@ var _AVLHelper = __webpack_require__(0);
 
 var _AVLHelper2 = _interopRequireDefault(_AVLHelper);
 
-var _Search = __webpack_require__(2);
+var _Search = __webpack_require__(3);
 
 var _Search2 = _interopRequireDefault(_Search);
+
+var _Delete = __webpack_require__(2);
+
+var _Delete2 = _interopRequireDefault(_Delete);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -505,6 +639,30 @@ var AVLTree = function () {
     value: function find(value, path) {
       return _Search2.default.find(this.root, value, path);
     }
+
+    /**
+     * Delete node with input value
+     * @param {Any} value 
+     * @param {String} path - list of keys in object path
+     */
+
+  }, {
+    key: 'delete',
+    value: function _delete(value, path) {
+      this.root = _Delete2.default.deleteNode(this.root, value, path, this.comparator);
+    }
+
+    /**
+     * Get minimum root of tree. Depends from comparator.
+     * @param {AVLTree} root 
+     * @returns {AVLTree} root with the smalest value
+     */
+
+  }, {
+    key: 'getMinValue',
+    value: function getMinValue() {
+      return _AVLHelper2.default.getMinValueNode(this.root).value;
+    }
   }]);
 
   return AVLTree;
@@ -513,7 +671,7 @@ var AVLTree = function () {
 exports.default = AVLTree;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);

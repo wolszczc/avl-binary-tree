@@ -45,7 +45,7 @@ export default class Insert {
     //     T2   x                     T1  T2 T3  T4
     //         / \
     //       T3  T4
-    if (balance < -1 && !comparator(key, root.value) && key !== root.value) {
+    if (balance < -1 && comparator(root.value, key)) {
       return AVLHelper.leftRotate(root)
     }
     // Left Right 
@@ -56,7 +56,7 @@ export default class Insert {
     // T1   x                          y    T3                    T1  T2 T3  T4
     //     / \                        / \
     //   T2   T3                    T1   T2
-    if (balance > 1 && !comparator(key, root.value) && key !== root.value) {
+    if (balance > 1 && comparator(root.value, key)) {
       root.left = AVLHelper.leftRotate(root.left)
       return AVLHelper.rightRotate(root)
     }
