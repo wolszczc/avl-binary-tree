@@ -10,7 +10,7 @@ yarn add avl-binary-tree
 * `new AVLTree(options:object):AVLTree` - Constructor.
 #### Options
 * `comparator:function` - [optional] Compare two values.
-* `path:string` - [optional] - When value in tree is object use param `path` to define keys path e.g. `'foo.bar'`.
+* `path:string` - [optional] - When value in tree is object use param `path` to define keys path e.g. `'foo.bar'`. If it use become default value to all paths in methods. Can be overwrite in method param.  
 #### Comparator
 Default compare function
 ```javascript
