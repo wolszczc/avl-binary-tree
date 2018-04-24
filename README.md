@@ -7,7 +7,10 @@ npm i avl-binary-tree
 yarn add avl-binary-tree
 ```
 ## API 
-* `new AVLTree([comparator:function])` - constructor
+* `new AVLTree(options:object)` - Constructor.
+#### Options
+* `comparator:function` - [optional] Compare two values.
+* `path:string` - [optional] - When value in tree is object use param `path` to define keys path e.g. `'foo.bar'`.
 #### Comparator
 Default compare function
 ```javascript
@@ -18,7 +21,8 @@ function compare (a, b) {
 #### Methods
 * `insert(key:any)` - Insert value to tree.
 * `getHeight():number` - Return height of tree.
-* `getMinValue():any` - Return the smallest value of tree.
+* `getMinValue():any` - Return the smallest value of tree. Depends from comparator. If value of left root is smaller than right root value. 
+* `getMaxValue():any` - Return the biggest value of tree. Depends from comparator. If value of left root is smaller than right root value.
 * `find(value:any, [path:string]):boolean` - Return true when value was 
 found, false if not. When value in tree is object use param `path` to define key's path e.g. `'foo.bar'`.
 * `delete(value:any, [path:string])` - Delete root with input value. `path` works similar to functions `find`.
@@ -41,9 +45,13 @@ tree.insert(3)
 ```javascript
 tree.getHeight()
 ```
-* `getMinValue():any` - Return the smallest value of tree.
+* `getMinValue():any` - Return the smallest value of tree. Depends from comparator. If value of left root is smaller than right root value. 
 ```javascript
 tree.getMinValue()
+```
+* `getMaxValue():any` - Return the biggest value of tree. Depends from comparator. If value of left root is smaller than right root value.
+```javascript
+tree.getMaxValue()
 ```
 * `find(value:any, [path:string]):boolean` - Return true when value was found, false if not. When value in tree is object use param `path` to define keys path e.g. `'foo.bar'`.
 ```javascript

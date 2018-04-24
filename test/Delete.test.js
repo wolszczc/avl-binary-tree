@@ -1,7 +1,7 @@
 import AVLTree from '../src'
 
 test('Delete string from tree', () => {
-  const tree = new AVLTree((a,b) => a < b) 
+  const tree = new AVLTree({comparator: (a,b) => a < b}) 
   tree.insert('atest')
   tree.insert('ztest')
   tree.insert('btest')
@@ -9,11 +9,11 @@ test('Delete string from tree', () => {
 
   tree.delete('atest')
 
-  expect(tree.find('atest')).toBe(false);
-});
+  expect(tree.find('atest')).toBe(false)
+})
 
 test('delete number from tree with objects', () => {
-  const tree = new AVLTree((a,b) => a.a < b.a) 
+  const tree = new AVLTree({comparator: (a, b) => a.a < b.a}) 
   tree.insert({x:{a:4, b:'atest'}})
   tree.insert({x:{a:5, b:'ztest'}})
   tree.insert({x:{a:1, b:'btest'}})
@@ -21,5 +21,5 @@ test('delete number from tree with objects', () => {
 
   tree.delete(8, 'x.a')
 
-  expect(tree.find(8, 'x.a')).toBe(false);
-});
+  expect(tree.find(8, 'x.a')).toBe(false)
+})

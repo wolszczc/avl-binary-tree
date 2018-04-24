@@ -190,18 +190,33 @@ var Helper = function () {
     }
 
     /**
-     * Get minimum root of tree. Depends from comparator.
+     * Get deepest right root of tree.
      * @param {AVLTree} root 
-     * @returns {AVLTree} root with the smalest value
+     * @returns {AVLTree} last right root
      */
 
   }, {
-    key: 'getMinValueNode',
-    value: function getMinValueNode(root) {
+    key: 'getLastRightRoot',
+    value: function getLastRightRoot(root) {
+      if (root === null || root.right === null) {
+        return root;
+      }
+      return Helper.getLastRightRoot(root.right);
+    }
+
+    /**
+    * Get deepest left root of tree.
+    * @param {AVLTree} root 
+    * @returns {AVLTree} last left root
+    */
+
+  }, {
+    key: 'getLastLeftRoot',
+    value: function getLastLeftRoot(root) {
       if (root === null || root.left === null) {
         return root;
       }
-      return Helper.getMinValueNode(root.left);
+      return Helper.getLastLeftRoot(root.left);
     }
 
     /**
@@ -596,13 +611,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var AVLTree = function () {
   /**
    * Constructor AVLTree
-   * @param {Function} comparator - compare two object|value  
+   * @param {Object} options - AVLTree options
+   * @param {Function} options.comparator - compare two objects|values 
+   * @param {String} options.path - list of keys in object path
    */
-  function AVLTree(comparator) {
+  function AVLTree() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     _classCallCheck(this, AVLTree);
 
     this.root = null;
-    this.comparator = comparator || _Helper2.default.compare;
+    this.comparator = options.comparator || _Helper2.default.compare;
+    this.path = options.path || '';
   }
 
   /**
@@ -636,7 +656,9 @@ var AVLTree = function () {
 
   }, {
     key: 'find',
-    value: function find(value, path) {
+    value: function find(value) {
+      var path = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.path;
+
       return _Search2.default.find(this.root, value, path);
     }
 
@@ -648,7 +670,9 @@ var AVLTree = function () {
 
   }, {
     key: 'delete',
-    value: function _delete(value, path) {
+    value: function _delete(value) {
+      var path = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.path;
+
       this.root = _Delete2.default.deleteNode(this.root, value, path, this.comparator);
     }
 
@@ -661,7 +685,19 @@ var AVLTree = function () {
   }, {
     key: 'getMinValue',
     value: function getMinValue() {
-      return _Helper2.default.getMinValueNode(this.root).value;
+      return _Helper2.default.getLastLeftRoot(this.root).value;
+    }
+
+    /**
+    * Get maximum root of tree. Depends from comparator.
+    * @param {AVLTree} root 
+    * @returns {AVLTree} root with the biggest value
+    */
+
+  }, {
+    key: 'getMaxValue',
+    value: function getMaxValue() {
+      return _Helper2.default.getLastRightRoot(this.root).value;
     }
   }]);
 

@@ -75,15 +75,27 @@ export default class Helper {
   }
 
   /**
-   * Get minimum root of tree. Depends from comparator.
+   * Get deepest right root of tree.
    * @param {AVLTree} root 
-   * @returns {AVLTree} root with the smalest value
+   * @returns {AVLTree} last right root
    */
-  static getMinValueNode(root) {
+  static getLastRightRoot(root) {
+    if (root === null || root.right === null) {
+      return root
+    }
+    return Helper.getLastRightRoot(root.right)
+  }
+
+    /**
+   * Get deepest left root of tree.
+   * @param {AVLTree} root 
+   * @returns {AVLTree} last left root
+   */
+  static getLastLeftRoot(root) {
     if (root === null || root.left === null) {
       return root
     }
-    return Helper.getMinValueNode(root.left)
+    return Helper.getLastLeftRoot(root.left)
   }
 
   /**
