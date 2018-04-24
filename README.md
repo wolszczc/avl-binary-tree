@@ -33,7 +33,9 @@ const tree = new AVLTree()
 ```
 #### Comparator
 ```javascript
-const tree = new AVLTree((a, b) => a < b)
+const tree = new AVLTree({
+    comparator: (a, b) => a < b
+  })
 ```
 #### Methods
 * `insert(key:any)` - Insert value to tree
