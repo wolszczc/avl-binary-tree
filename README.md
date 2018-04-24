@@ -7,7 +7,7 @@ npm i avl-binary-tree
 yarn add avl-binary-tree
 ```
 ## API 
-* `new AVLTree(options:object)` - Constructor.
+* `new AVLTree(options:object):AVLTree` - Constructor.
 #### Options
 * `comparator:function` - [optional] Compare two values.
 * `path:string` - [optional] - When value in tree is object use param `path` to define keys path e.g. `'foo.bar'`.
