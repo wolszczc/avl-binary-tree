@@ -11,6 +11,12 @@ test('insert string', () => {
 })
 
 test('insert object', () => {
-  const tree = Insert.insertToNode(null, {foo:'test'})
+  const tree = Insert.insertToNode(null, {foo: 'test'})
   expect(tree.value.foo).toBe('test')
+})
+
+test('insert array', () => {
+  let tree = {}
+  tree = Insert.insertArray(tree, [1, 2, 3, 4], (a, b) => a > b)
+  expect(tree.height).toBe(4)
 })

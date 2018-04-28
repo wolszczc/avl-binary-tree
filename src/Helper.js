@@ -1,7 +1,7 @@
 export default class Helper {
   /**
    * Rotate tree to left
-   * @param {AVLTree} root 
+   * @param {AVLTree} root
    * @returns {AVLTree} root rotate to left
    */
   static leftRotate (root) {
@@ -20,7 +20,7 @@ export default class Helper {
 
   /**
    * Rotate tree to right
-   * @param {AVLTree} root 
+   * @param {AVLTree} root
    * @returns {AVLTree} root rotate to right
    */
   static rightRotate (root) {
@@ -39,7 +39,7 @@ export default class Helper {
 
   /**
    * Get tree height
-   * @param {AVLTree} root 
+   * @param {AVLTree} root
    * @returns {Number} height of tree
    */
   static getHeight (root) {
@@ -48,7 +48,7 @@ export default class Helper {
 
   /**
    * Get maximum tree height
-   * @param {AVLTree} root 
+   * @param {AVLTree} root
    * @returns {Number} maximum height of branchs
    */
   static maxRootHeight (root) {
@@ -57,7 +57,7 @@ export default class Helper {
 
   /**
    * Get balanced height
-   * @param {AVLTree} root 
+   * @param {AVLTree} root
    * @returns {Number} balanced value of branch height
    */
   static getBalance (root) {
@@ -66,8 +66,8 @@ export default class Helper {
 
   /**
    * Default comparator of two values
-   * @param {Number|String} valueA 
-   * @param {Number|String} valueB 
+   * @param {Number|String} valueA
+   * @param {Number|String} valueB
    * @returns {boolean} comparison valueA and valueB
    */
   static compare (valueA, valueB) {
@@ -76,22 +76,22 @@ export default class Helper {
 
   /**
    * Get deepest right root of tree.
-   * @param {AVLTree} root 
+   * @param {AVLTree} root
    * @returns {AVLTree} last right root
    */
-  static getLastRightRoot(root) {
+  static getLastRightRoot (root) {
     if (root === null || root.right === null) {
       return root
     }
     return Helper.getLastRightRoot(root.right)
   }
 
-    /**
+  /**
    * Get deepest left root of tree.
-   * @param {AVLTree} root 
+   * @param {AVLTree} root
    * @returns {AVLTree} last left root
    */
-  static getLastLeftRoot(root) {
+  static getLastLeftRoot (root) {
     if (root === null || root.left === null) {
       return root
     }
@@ -102,7 +102,7 @@ export default class Helper {
    * Get value from object
    * @param {Object} key - searched object
    * @param {String} path - path to value in object
-   * @returns {Any} - value of path in object
+   * @returns {*} - value of path in object
    */
   static getValueFromObject (key, path) {
     let value = key

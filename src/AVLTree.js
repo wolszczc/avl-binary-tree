@@ -7,21 +7,30 @@ export default class AVLTree {
   /**
    * Constructor AVLTree
    * @param {Object} options - AVLTree options
-   * @param {Function} options.comparator - compare two objects|values 
+   * @param {Function} options.comparator - compare two objects|values
    * @param {String} options.path - list of keys in object path
    */
   constructor (options = {}) {
     this.root = null
     this.comparator = options.comparator || Helper.compare
     this.path = options.path || ''
+    this.isRepeat = options.isRepeat
   }
 
   /**
    * Add new value to tree
-   * @param {Any} key
+   * @param {*} key
    */
   insert (key) {
-    this.root = Insert.insertToNode(this.root, key, this.comparator) 
+    this.root = Insert.insertToNode(this.root, key, this.comparator)
+  }
+
+  /**
+   * Add new array to tree
+   * @param {Array} keys
+   */
+  insertArray (keys) {
+    this.root = Insert.insertArray(this.root, keys, this.comparator)
   }
 
   /** Get height of tree
@@ -33,7 +42,7 @@ export default class AVLTree {
 
   /**
    * Search value in tree
-   * @param {Any} value 
+   * @param {*} value
    * @param {String} path - list of keys in object path
    * @returns {Boolean} - true when value was found, false if not
    */
@@ -43,7 +52,7 @@ export default class AVLTree {
 
   /**
    * Delete node with input value
-   * @param {Any} value 
+   * @param {*} value
    * @param {String} path - list of keys in object path
    */
   delete (value, path = this.path) {
@@ -52,19 +61,17 @@ export default class AVLTree {
 
   /**
    * Get minimum root of tree. Depends from comparator.
-   * @param {AVLTree} root 
    * @returns {AVLTree} root with the smalest value
    */
-  getMinValue() {
+  getMinValue () {
     return Helper.getLastLeftRoot(this.root).value
   }
 
-    /**
+  /**
    * Get maximum root of tree. Depends from comparator.
-   * @param {AVLTree} root 
    * @returns {AVLTree} root with the biggest value
    */
-  getMaxValue() {
+  getMaxValue () {
     return Helper.getLastRightRoot(this.root).value
   }
 }

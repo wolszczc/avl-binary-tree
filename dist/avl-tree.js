@@ -95,7 +95,7 @@ var Helper = function () {
 
     /**
      * Rotate tree to left
-     * @param {AVLTree} root 
+     * @param {AVLTree} root
      * @returns {AVLTree} root rotate to left
      */
     value: function leftRotate(root) {
@@ -117,7 +117,7 @@ var Helper = function () {
 
     /**
      * Rotate tree to right
-     * @param {AVLTree} root 
+     * @param {AVLTree} root
      * @returns {AVLTree} root rotate to right
      */
 
@@ -142,7 +142,7 @@ var Helper = function () {
 
     /**
      * Get tree height
-     * @param {AVLTree} root 
+     * @param {AVLTree} root
      * @returns {Number} height of tree
      */
 
@@ -154,7 +154,7 @@ var Helper = function () {
 
     /**
      * Get maximum tree height
-     * @param {AVLTree} root 
+     * @param {AVLTree} root
      * @returns {Number} maximum height of branchs
      */
 
@@ -166,7 +166,7 @@ var Helper = function () {
 
     /**
      * Get balanced height
-     * @param {AVLTree} root 
+     * @param {AVLTree} root
      * @returns {Number} balanced value of branch height
      */
 
@@ -178,8 +178,8 @@ var Helper = function () {
 
     /**
      * Default comparator of two values
-     * @param {Number|String} valueA 
-     * @param {Number|String} valueB 
+     * @param {Number|String} valueA
+     * @param {Number|String} valueB
      * @returns {boolean} comparison valueA and valueB
      */
 
@@ -191,7 +191,7 @@ var Helper = function () {
 
     /**
      * Get deepest right root of tree.
-     * @param {AVLTree} root 
+     * @param {AVLTree} root
      * @returns {AVLTree} last right root
      */
 
@@ -206,7 +206,7 @@ var Helper = function () {
 
     /**
     * Get deepest left root of tree.
-    * @param {AVLTree} root 
+    * @param {AVLTree} root
     * @returns {AVLTree} last left root
     */
 
@@ -223,7 +223,7 @@ var Helper = function () {
      * Get value from object
      * @param {Object} key - searched object
      * @param {String} path - path to value in object
-     * @returns {Any} - value of path in object
+     * @returns {*} - value of path in object
      */
 
   }, {
@@ -261,6 +261,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _AVLTree2.default;
 
+// const a = new AVLTree()
+// const b = [1,2,3,4,5]
+//
+// a.insertArray(b)
+//
+// console.log(a)
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -294,8 +301,8 @@ var Delete = function () {
 
     /**
      * Delete node with input value
-     * @param {AVLTree} root 
-     * @param {Any} key 
+     * @param {AVLTree} root
+     * @param {*} key
      * @param {String} path - list of keys in object path
      * @param {Function} comparator compare two object|value
      * @returns {AVLTree} new tree without deleted node
@@ -403,8 +410,8 @@ var Search = function () {
 
     /**
      * Search value in root
-     * @param {AVLTree} root 
-     * @param {Any} key - serach value
+     * @param {AVLTree} root
+     * @param {*} key - serach value
      * @param {String} path - path to value in object
      * @returns {Boolean} - true when key was found, false if not
      */
@@ -497,8 +504,8 @@ var Insert = function () {
 
     /**
      * Insert new value to node.
-     * @param {AVLTree} root 
-     * @param {any} key 
+     * @param {AVLTree} root
+     * @param {*} key
      * @param {function} comparator compare two object|value
      * @returns {AVLTree} node with new value
      */
@@ -520,19 +527,19 @@ var Insert = function () {
 
       // If unbalanced
       // Left Left
-      //      z                                      y 
+      //      z                                      y
       //     / \                                   /   \
       //    y   T4      Right Rotate (z)          x      z
-      //   / \          - - - - - - - - ->      /  \    /  \ 
+      //   / \          - - - - - - - - ->      /  \    /  \
       //  x   T3                               T1  T2  T3  T4
       // / \
       // T1   T2
       if (balance > 1 && comparator(key, root.value)) {
         return _Helper2.default.rightRotate(root);
       }
-      // Right Right 
+      // Right Right
       //    z                                y
-      //   /  \                            /   \ 
+      //   /  \                            /   \
       //  T1   y     Left Rotate(z)       z      x
       //      /  \   - - - - - - - ->    / \    / \
       //     T2   x                     T1  T2 T3  T4
@@ -541,9 +548,9 @@ var Insert = function () {
       if (balance < -1 && comparator(root.value, key)) {
         return _Helper2.default.leftRotate(root);
       }
-      // Left Right 
+      // Left Right
       //      z                               z                           x
-      //     / \                            /   \                        /  \ 
+      //     / \                            /   \                        /  \
       //    y   T4  Left Rotate (y)        x    T4  Right Rotate(z)    y      z
       //   / \      - - - - - - - - ->    /  \      - - - - - - - ->  / \    / \
       // T1   x                          y    T3                    T1  T2 T3  T4
@@ -555,7 +562,7 @@ var Insert = function () {
       }
       // Right Left
       //    z                            z                            x
-      //   / \                          / \                          /  \ 
+      //   / \                          / \                          /  \
       // T1   y   Right Rotate (y)    T1   x      Left Rotate(z)   z      y
       //     / \  - - - - - - - - ->     /  \   - - - - - - - ->  / \    / \
       //    x   T4                      T2   y                  T1  T2  T3  T4
@@ -564,6 +571,45 @@ var Insert = function () {
       if (balance < -1 && comparator(key, root.value)) {
         root.right = _Helper2.default.rightRotate(root.right);
         return _Helper2.default.leftRotate(root);
+      }
+
+      return root;
+    }
+
+    /**
+     * Insert array to node.
+     * @param {AVLTree} root
+     * @param {Array} keys
+     * @param {function} comparator compare two object|value
+     * @returns {AVLTree} node with new value
+     */
+
+  }, {
+    key: 'insertArray',
+    value: function insertArray(root, keys, comparator) {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var key = _step.value;
+
+          root = Insert.insertToNode(root, key, comparator);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
       }
 
       return root;
@@ -612,7 +658,7 @@ var AVLTree = function () {
   /**
    * Constructor AVLTree
    * @param {Object} options - AVLTree options
-   * @param {Function} options.comparator - compare two objects|values 
+   * @param {Function} options.comparator - compare two objects|values
    * @param {String} options.path - list of keys in object path
    */
   function AVLTree() {
@@ -627,7 +673,7 @@ var AVLTree = function () {
 
   /**
    * Add new value to tree
-   * @param {Any} key
+   * @param {*} key
    */
 
 
@@ -635,6 +681,17 @@ var AVLTree = function () {
     key: 'insert',
     value: function insert(key) {
       this.root = _Insert2.default.insertToNode(this.root, key, this.comparator);
+    }
+
+    /**
+     * Add new array to tree
+     * @param {Array} keys
+     */
+
+  }, {
+    key: 'insertArray',
+    value: function insertArray(keys) {
+      this.root = _Insert2.default.insertArray(this.root, keys, this.comparator);
     }
 
     /** Get height of tree
@@ -649,7 +706,7 @@ var AVLTree = function () {
 
     /**
      * Search value in tree
-     * @param {Any} value 
+     * @param {*} value
      * @param {String} path - list of keys in object path
      * @returns {Boolean} - true when value was found, false if not
      */
@@ -664,7 +721,7 @@ var AVLTree = function () {
 
     /**
      * Delete node with input value
-     * @param {Any} value 
+     * @param {*} value
      * @param {String} path - list of keys in object path
      */
 
@@ -678,7 +735,6 @@ var AVLTree = function () {
 
     /**
      * Get minimum root of tree. Depends from comparator.
-     * @param {AVLTree} root 
      * @returns {AVLTree} root with the smalest value
      */
 
@@ -690,7 +746,6 @@ var AVLTree = function () {
 
     /**
     * Get maximum root of tree. Depends from comparator.
-    * @param {AVLTree} root 
     * @returns {AVLTree} root with the biggest value
     */
 

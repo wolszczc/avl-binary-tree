@@ -20,6 +20,7 @@ function compare (a, b) {
 ```
 #### Methods
 * `insert(key:any)` - Insert value to tree.
+* `insertArray(key:array)` - Insert array to tree.
 * `getHeight():number` - Return height of tree.
 * `getMinValue():any` - Return the smallest value of tree. Depends from comparator. If value of left root is smaller than right root value. 
 * `getMaxValue():any` - Return the biggest value of tree. Depends from comparator. If value of left root is smaller than right root value.
@@ -42,6 +43,11 @@ const tree = new AVLTree({
 ```javascript
 tree.insert(1)
 tree.insert(3)
+```
+* `insertArray(key:array)` - Insert array to tree.
+```javascript
+const a = [1, 2]
+tree.insertArray(a)
 ```
 * `getHeight():number` - Return height of tree
 ```javascript
