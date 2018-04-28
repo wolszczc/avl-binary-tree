@@ -4,8 +4,8 @@ import Helper from './Helper'
 export default class Insert {
   /**
    * Insert new value to node.
-   * @param {AVLTree} root 
-   * @param {any} key 
+   * @param {AVLTree} root
+   * @param {*} key
    * @param {function} comparator compare two object|value
    * @returns {AVLTree} node with new value
    */
@@ -27,19 +27,19 @@ export default class Insert {
 
     // If unbalanced
     // Left Left
-    //      z                                      y 
+    //      z                                      y
     //     / \                                   /   \
     //    y   T4      Right Rotate (z)          x      z
-    //   / \          - - - - - - - - ->      /  \    /  \ 
+    //   / \          - - - - - - - - ->      /  \    /  \
     //  x   T3                               T1  T2  T3  T4
     // / \
     // T1   T2
     if (balance > 1 && comparator(key, root.value)) {
       return Helper.rightRotate(root)
     }
-    // Right Right 
+    // Right Right
     //    z                                y
-    //   /  \                            /   \ 
+    //   /  \                            /   \
     //  T1   y     Left Rotate(z)       z      x
     //      /  \   - - - - - - - ->    / \    / \
     //     T2   x                     T1  T2 T3  T4
@@ -48,9 +48,9 @@ export default class Insert {
     if (balance < -1 && comparator(root.value, key)) {
       return Helper.leftRotate(root)
     }
-    // Left Right 
+    // Left Right
     //      z                               z                           x
-    //     / \                            /   \                        /  \ 
+    //     / \                            /   \                        /  \
     //    y   T4  Left Rotate (y)        x    T4  Right Rotate(z)    y      z
     //   / \      - - - - - - - - ->    /  \      - - - - - - - ->  / \    / \
     // T1   x                          y    T3                    T1  T2 T3  T4
@@ -62,7 +62,7 @@ export default class Insert {
     }
     // Right Left
     //    z                            z                            x
-    //   / \                          / \                          /  \ 
+    //   / \                          / \                          /  \
     // T1   y   Right Rotate (y)    T1   x      Left Rotate(z)   z      y
     //     / \  - - - - - - - - ->     /  \   - - - - - - - ->  / \    / \
     //    x   T4                      T2   y                  T1  T2  T3  T4
@@ -73,6 +73,20 @@ export default class Insert {
       return Helper.leftRotate(root)
     }
 
+    return root
+  }
+
+  /**
+   * Insert array to node.
+   * @param {AVLTree} root
+   * @param {Array} keys
+   * @param {function} comparator compare two object|value
+   * @returns {AVLTree} node with new value
+   */
+  static insertArray (root, keys, comparator) {
+    for (let key of keys) {
+      root = Insert.insertToNode(root, key, comparator)
+    }
     return root
   }
 }
