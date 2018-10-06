@@ -23,7 +23,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "yarn build && yarn test"
+      "pre-commit": "yarn build && git add dist && yarn test"
     }
   },
   "author": "Cezary Wolszczak, wolszczc, <czarekwolszczak@gmail.com>",
