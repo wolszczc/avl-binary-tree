@@ -37,17 +37,32 @@ module.exports =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
 /******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
 /******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -67,7 +82,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -253,7 +268,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AVLTree = __webpack_require__(6);
+var _AVLTree = __webpack_require__(2);
 
 var _AVLTree2 = _interopRequireDefault(_AVLTree);
 
@@ -272,198 +287,138 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Insert = __webpack_require__(3);
+
+var _Insert2 = _interopRequireDefault(_Insert);
 
 var _Helper = __webpack_require__(0);
 
 var _Helper2 = _interopRequireDefault(_Helper);
 
+var _Search = __webpack_require__(5);
+
+var _Search2 = _interopRequireDefault(_Search);
+
+var _Delete = __webpack_require__(6);
+
+var _Delete2 = _interopRequireDefault(_Delete);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Delete = function () {
-  function Delete() {
-    _classCallCheck(this, Delete);
+var AVLTree = function () {
+  /**
+   * Constructor AVLTree
+   * @param {Object} options - AVLTree options
+   * @param {Function} options.comparator - compare two objects|values
+   * @param {String} options.path - list of keys in object path
+   */
+  function AVLTree() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    _classCallCheck(this, AVLTree);
+
+    this.root = null;
+    this.comparator = options.comparator || _Helper2.default.compare;
+    this.path = options.path || '';
+    this.isRepeat = options.isRepeat;
   }
 
-  _createClass(Delete, null, [{
-    key: 'deleteNode',
+  /**
+   * Add new value to tree
+   * @param {*} key
+   */
+
+
+  _createClass(AVLTree, [{
+    key: 'insert',
+    value: function insert(key) {
+      this.root = _Insert2.default.insertToNode(this.root, key, this.comparator);
+    }
+
+    /**
+     * Add new array to tree
+     * @param {Array} keys
+     */
+
+  }, {
+    key: 'insertArray',
+    value: function insertArray(keys) {
+      this.root = _Insert2.default.insertArray(this.root, keys, this.comparator);
+    }
+
+    /** Get height of tree
+     * @returns height of tree
+     */
+
+  }, {
+    key: 'getHeight',
+    value: function getHeight() {
+      return _Helper2.default.getHeight(this.root);
+    }
+
+    /**
+     * Search value in tree
+     * @param {*} value
+     * @param {String} path - list of keys in object path
+     * @returns {Boolean} - true when value was found, false if not
+     */
+
+  }, {
+    key: 'find',
+    value: function find(value) {
+      var path = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.path;
+
+      return _Search2.default.find(this.root, value, path);
+    }
 
     /**
      * Delete node with input value
-     * @param {AVLTree} root
-     * @param {*} key
+     * @param {*} value
      * @param {String} path - list of keys in object path
-     * @param {Function} comparator compare two object|value
-     * @returns {AVLTree} new tree without deleted node
      */
-    value: function deleteNode(root, key, path, comparator) {
-      // Perform standard BST delete
-      if (!root) {
-        return root;
-      } else {
-        var value = root.value;
-        // if object get value from key
-        if (_typeof(root.value) === 'object') {
-          value = _Helper2.default.getValueFromObject(root.value, path);
-        }
-        if (key < value) {
-          root.left = Delete.deleteNode(root.left, key, path, comparator);
-        } else if (key > value) {
-          root.right = Delete.deleteNode(root.right, key, path, comparator);
-        } else {
-          if (!root.left) {
-            var rootRight = root.right;
-            root = null;
-            return rootRight;
-          } else if (!root.right) {
-            var rootLeft = root.left;
-            root = null;
-            return rootLeft;
-          }
-          var minValueRoot = _Helper2.default.getMinValueNode(root.right);
-          root.value = minValueRoot.value;
-          root.right = Delete.deleteNode(root.right, minValueRoot, comparator);
-        }
-      }
 
-      // If the tree has only one node
-      if (!root) {
-        return root;
-      }
+  }, {
+    key: 'delete',
+    value: function _delete(value) {
+      var path = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.path;
 
-      // Update the height of the ancestor node
-      root.height = 1 + _Helper2.default.maxRootHeight(root);
+      this.root = _Delete2.default.deleteNode(this.root, value, path, this.comparator);
+    }
 
-      // Get the balance factor
-      var balance = _Helper2.default.getBalance(root);
+    /**
+     * Get minimum root of tree. Depends from comparator.
+     * @returns {AVLTree} root with the smalest value
+     */
 
-      // If the node is unbalanced
-      // Left Left
-      if (balance > 1 && _Helper2.default.getBalance(root.left) >= 0) {
-        return _Helper2.default.rightRotate(root);
-      }
-      // Right Right
-      if (balance < -1 && _Helper2.default.getBalance(root.right) <= 0) {
-        return _Helper2.default.leftRotate(root);
-      }
-      // Left Right
-      if (balance > 1 && _Helper2.default.getBalance(root.left) < 0) {
-        root.left = _Helper2.default.leftRotate(root.left);
-        return _Helper2.default.rightRotate(root);
-      }
-      // Right Left
-      if (balance < -1 && _Helper2.default.getBalance(root.right) > 0) {
-        root.right = _Helper2.default.rightRotate(root.right);
-        return _Helper2.default.leftRotate(root);
-      }
+  }, {
+    key: 'getMinValue',
+    value: function getMinValue() {
+      return _Helper2.default.getLastLeftRoot(this.root).value;
+    }
 
-      return root;
+    /**
+     * Get maximum root of tree. Depends from comparator.
+     * @returns {AVLTree} root with the biggest value
+     */
+
+  }, {
+    key: 'getMaxValue',
+    value: function getMaxValue() {
+      return _Helper2.default.getLastRightRoot(this.root).value;
     }
   }]);
 
-  return Delete;
+  return AVLTree;
 }();
 
-exports.default = Delete;
+exports.default = AVLTree;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _Helper = __webpack_require__(0);
-
-var _Helper2 = _interopRequireDefault(_Helper);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Search = function () {
-  function Search() {
-    _classCallCheck(this, Search);
-  }
-
-  _createClass(Search, null, [{
-    key: 'find',
-
-    /**
-     * Search value in root
-     * @param {AVLTree} root
-     * @param {*} key - serach value
-     * @param {String} path - path to value in object
-     * @returns {Boolean} - true when key was found, false if not
-     */
-    value: function find(root, key, path) {
-      if (root) {
-        var value = root.value;
-        // if object get value from key
-        if (_typeof(root.value) === 'object') {
-          value = _Helper2.default.getValueFromObject(root.value, path);
-        }
-        if (value === key) {
-          return true;
-        }
-
-        // Find the element in left sub-tree
-        if (Search.find(root.left, key, path) === true) {
-          return true;
-        }
-        // Find the element in right sub-tree
-        else if (Search.find(root.right, key, path) === true) {
-            return true;
-          }
-      }
-
-      return false;
-    }
-  }]);
-
-  return Search;
-}();
-
-exports.default = Search;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var TreeNode = function TreeNode(value) {
-  _classCallCheck(this, TreeNode);
-
-  this.value = value;
-  this.left = null;
-  this.right = null;
-  this.height = 1;
-};
-
-exports.default = TreeNode;
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -615,6 +570,98 @@ var Insert = function () {
 exports.default = Insert;
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var TreeNode = function TreeNode(value) {
+  _classCallCheck(this, TreeNode);
+
+  this.value = value;
+  this.left = null;
+  this.right = null;
+  this.height = 1;
+};
+
+exports.default = TreeNode;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Helper = __webpack_require__(0);
+
+var _Helper2 = _interopRequireDefault(_Helper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Search = function () {
+  function Search() {
+    _classCallCheck(this, Search);
+  }
+
+  _createClass(Search, null, [{
+    key: 'find',
+
+    /**
+     * Search value in root
+     * @param {AVLTree} root
+     * @param {*} key - serach value
+     * @param {String} path - path to value in object
+     * @returns {Boolean} - true when key was found, false if not
+     */
+    value: function find(root, key, path) {
+      if (root) {
+        var value = root.value;
+        // if object get value from key
+        if (_typeof(root.value) === 'object') {
+          value = _Helper2.default.getValueFromObject(root.value, path);
+        }
+        if (value === key) {
+          return true;
+        }
+
+        // Find the element in left sub-tree
+        if (Search.find(root.left, key, path) === true) {
+          return true;
+        }
+        // Find the element in right sub-tree
+        else if (Search.find(root.right, key, path) === true) {
+            return true;
+          }
+      }
+
+      return false;
+    }
+  }]);
+
+  return Search;
+}();
+
+exports.default = Search;
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -625,143 +672,103 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _Insert = __webpack_require__(5);
-
-var _Insert2 = _interopRequireDefault(_Insert);
 
 var _Helper = __webpack_require__(0);
 
 var _Helper2 = _interopRequireDefault(_Helper);
 
-var _Search = __webpack_require__(3);
-
-var _Search2 = _interopRequireDefault(_Search);
-
-var _Delete = __webpack_require__(2);
-
-var _Delete2 = _interopRequireDefault(_Delete);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AVLTree = function () {
-  /**
-   * Constructor AVLTree
-   * @param {Object} options - AVLTree options
-   * @param {Function} options.comparator - compare two objects|values
-   * @param {String} options.path - list of keys in object path
-   */
-  function AVLTree() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    _classCallCheck(this, AVLTree);
-
-    this.root = null;
-    this.comparator = options.comparator || _Helper2.default.compare;
-    this.path = options.path || '';
-    this.isRepeat = options.isRepeat;
+var Delete = function () {
+  function Delete() {
+    _classCallCheck(this, Delete);
   }
 
-  /**
-   * Add new value to tree
-   * @param {*} key
-   */
-
-
-  _createClass(AVLTree, [{
-    key: 'insert',
-    value: function insert(key) {
-      this.root = _Insert2.default.insertToNode(this.root, key, this.comparator);
-    }
-
-    /**
-     * Add new array to tree
-     * @param {Array} keys
-     */
-
-  }, {
-    key: 'insertArray',
-    value: function insertArray(keys) {
-      this.root = _Insert2.default.insertArray(this.root, keys, this.comparator);
-    }
-
-    /** Get height of tree
-     * @returns height of tree
-     */
-
-  }, {
-    key: 'getHeight',
-    value: function getHeight() {
-      return _Helper2.default.getHeight(this.root);
-    }
-
-    /**
-     * Search value in tree
-     * @param {*} value
-     * @param {String} path - list of keys in object path
-     * @returns {Boolean} - true when value was found, false if not
-     */
-
-  }, {
-    key: 'find',
-    value: function find(value) {
-      var path = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.path;
-
-      return _Search2.default.find(this.root, value, path);
-    }
+  _createClass(Delete, null, [{
+    key: 'deleteNode',
 
     /**
      * Delete node with input value
-     * @param {*} value
+     * @param {AVLTree} root
+     * @param {*} key
      * @param {String} path - list of keys in object path
+     * @param {Function} comparator compare two object|value
+     * @returns {AVLTree} new tree without deleted node
      */
+    value: function deleteNode(root, key, path, comparator) {
+      // Perform standard BST delete
+      if (!root) {
+        return root;
+      } else {
+        var value = root.value;
+        // if object get value from key
+        if (_typeof(root.value) === 'object') {
+          value = _Helper2.default.getValueFromObject(root.value, path);
+        }
+        if (key < value) {
+          root.left = Delete.deleteNode(root.left, key, path, comparator);
+        } else if (key > value) {
+          root.right = Delete.deleteNode(root.right, key, path, comparator);
+        } else {
+          if (!root.left) {
+            var rootRight = root.right;
+            root = null;
+            return rootRight;
+          } else if (!root.right) {
+            var rootLeft = root.left;
+            root = null;
+            return rootLeft;
+          }
+          var minValueRoot = _Helper2.default.getMinValueNode(root.right);
+          root.value = minValueRoot.value;
+          root.right = Delete.deleteNode(root.right, minValueRoot, comparator);
+        }
+      }
 
-  }, {
-    key: 'delete',
-    value: function _delete(value) {
-      var path = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.path;
+      // If the tree has only one node
+      if (!root) {
+        return root;
+      }
 
-      this.root = _Delete2.default.deleteNode(this.root, value, path, this.comparator);
-    }
+      // Update the height of the ancestor node
+      root.height = 1 + _Helper2.default.maxRootHeight(root);
 
-    /**
-     * Get minimum root of tree. Depends from comparator.
-     * @returns {AVLTree} root with the smalest value
-     */
+      // Get the balance factor
+      var balance = _Helper2.default.getBalance(root);
 
-  }, {
-    key: 'getMinValue',
-    value: function getMinValue() {
-      return _Helper2.default.getLastLeftRoot(this.root).value;
-    }
+      // If the node is unbalanced
+      // Left Left
+      if (balance > 1 && _Helper2.default.getBalance(root.left) >= 0) {
+        return _Helper2.default.rightRotate(root);
+      }
+      // Right Right
+      if (balance < -1 && _Helper2.default.getBalance(root.right) <= 0) {
+        return _Helper2.default.leftRotate(root);
+      }
+      // Left Right
+      if (balance > 1 && _Helper2.default.getBalance(root.left) < 0) {
+        root.left = _Helper2.default.leftRotate(root.left);
+        return _Helper2.default.rightRotate(root);
+      }
+      // Right Left
+      if (balance < -1 && _Helper2.default.getBalance(root.right) > 0) {
+        root.right = _Helper2.default.rightRotate(root.right);
+        return _Helper2.default.leftRotate(root);
+      }
 
-    /**
-     * Get maximum root of tree. Depends from comparator.
-     * @returns {AVLTree} root with the biggest value
-     */
-
-  }, {
-    key: 'getMaxValue',
-    value: function getMaxValue() {
-      return _Helper2.default.getLastRightRoot(this.root).value;
+      return root;
     }
   }]);
 
-  return AVLTree;
+  return Delete;
 }();
 
-exports.default = AVLTree;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(1);
-module.exports = __webpack_require__(1);
-
+exports.default = Delete;
 
 /***/ })
 /******/ ]);

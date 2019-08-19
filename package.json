@@ -1,6 +1,6 @@
 {
   "name": "avl-binary-tree",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Self-balancing binary search tree.",
   "main": "dist/avl-tree.js",
   "files": [
@@ -26,16 +26,24 @@
       "pre-commit": "yarn build && yarn test"
     }
   },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  },
   "author": "Cezary Wolszczak, wolszczc, <czarekwolszczak@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.6.1",
-    "husky": "^1.1.1",
+    "babel-core": "6.26.3",
+    "babel-loader": "7.1.5",
+    "babel-preset-env": "1.7.0",
+    "husky": "1.3.1",
     "jest": "^22.4.3",
     "path": "^0.12.7",
-    "webpack": "^4.4.1",
-    "webpack-cli": "^2.0.13"
+    "webpack": "4.39.2",
+    "webpack-cli": "^3.3.7"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
   }
 }
